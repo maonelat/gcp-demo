@@ -13,6 +13,6 @@ steps:
       - '-f'
       - '.gcp/Dockerfile'
   images: ["gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA"]
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args: [ 'run', 'deploy', 'gcp-demo-service', '--image', 'gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA', '--region', 'europe-west3', '--platform', 'managed' ]
