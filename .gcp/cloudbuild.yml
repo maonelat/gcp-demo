@@ -1,14 +1,8 @@
 steps:
   - name: maven:3-jdk-11
-    id: Test
-    entrypoint: mvn
-    args: ['test']
-  - name: maven:3-jdk-11
     id: Package
     entrypoint: mvn
     args: [ 'package' ]
-#  - name: gcr.io/cloud-builders/docker
-#    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA', '.' , '-f', '.gcp/Dockerfile' ]
   - name: gcr.io/cloud-builders/docker
     id: Build
     args:
@@ -18,4 +12,7 @@ steps:
       - '.'
       - '-f'
       - '.gcp/Dockerfile'
-#  images: ["gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA"]
+  images: ["gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA"]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [ 'run', 'deploy', 'gcp-demo-service', '--image', 'gcr.io/$PROJECT_ID/gcp-demo:$SHORT_SHA', '--region', 'europe-west3', '--platform', 'managed' ]
