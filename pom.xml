@@ -76,7 +76,11 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>com.google.cloud.sql</groupId>
+      <artifactId>postgres-socket-factory</artifactId>
+      <version>1.0.16</version>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
