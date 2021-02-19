@@ -2,7 +2,7 @@ steps:
   - name: maven:3-jdk-11
     id: Package
     entrypoint: mvn
-    args: [ 'package' ]
+    args: [ 'package','-Dmaven.test.skip=true']
   - name: gcr.io/cloud-builders/docker
     id: Build
     args:
