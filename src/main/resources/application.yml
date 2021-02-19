@@ -1,10 +1,3 @@
-quarkus:
-  datasource:
-    db-kind: postgresql
-    username: postgres
-    password: password
-    jdbc:
-      url: jdbc:postgresql:///grass-db?cloudSqlInstance=web-apps-278418:europe-west3:myquark&socketFactory=com.google.cloud.sql.postgres.SocketFactory&user=postgres&password=password
 "%dev":
   quarkus:
     datasource:
@@ -13,13 +6,20 @@ quarkus:
       password: password
       jdbc:
         url: jdbc:postgresql://34.89.221.132:5432/grass-db?stringtype=unspecified
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: password
+    jdbc:
+      url: jdbc:postgresql:///grass-db?cloudSqlInstance=web-apps-278418:europe-west3:myquark&socketFactory=com.google.cloud.sql.postgres.SocketFactory&user=postgres&password=password
 
   hibernate-orm:
     database:
       generation: none
 
   swagger-ui:
-     always-include: true
+    always-include: true
 
   flyway:
     migrate-at-start: true
