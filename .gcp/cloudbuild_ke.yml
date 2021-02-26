@@ -7,9 +7,23 @@ steps:
       - -Dmaven.test.skip=true
       - -Dquarkus.kubernetes.env.vars.quarkus-profile=prod
       - -Dquarkus.container-image.registry=gcr.io
-      - -Dquarkus.container-image.build=true
+#      - -Dquarkus.container-image.build=true
 #      - -Dquarkus.container-image.push=true
       - -Dquarkus.container-image.group=$PROJECT_ID
+  - name: gcr.io/cloud-builders/docker
+    id: Build
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/gcp-demo:1.0.0-SNAPSHOT'
+      - '.'
+      - '-f'
+      - '.gcp/Dockerfile'
+  - name: gcr.io/cloud-builders/docker
+    id: Push
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/gcp-demo:1.0.0-SNAPSHOT'
   - name: gcr.io/cloud-builders/gke-deploy
     id: Deploy to GKE
     args:
