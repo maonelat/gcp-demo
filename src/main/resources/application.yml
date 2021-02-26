@@ -35,12 +35,19 @@ quarkus:
     replicas: 2
     service-type: LoadBalancer
     image-pull-policy: IfNotPresent
-    config-map-volumes:
-      my-volume:
-        config-map-name: my-config-map
-    mounts:
-      my-volume:
-        path: /opt/mymount
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 250m
+      limits:
+        memory: 512Mi
+        cpu: 1000m
+#    config-map-volumes:
+#      my-volume:
+#        config-map-name: my-config-map
+#    mounts:
+#      my-volume:
+#        path: /opt/mymount
 
   container-image:
     registry: gcr.io
