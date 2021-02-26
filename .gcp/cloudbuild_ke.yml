@@ -28,6 +28,6 @@ steps:
     id: Deploy to GKE
     args:
       - run
-      - '-filename=target/kubernetes/kubernetes.yml'
-      - -location=europe-west1
-      - -cluster=autopilot-demo-cluster-1
+      - --filename=target/kubernetes/kubernetes.yml
+      - --location=europe-west1
+      - --cluster=autopilot-demo-cluster-1
