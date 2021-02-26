@@ -1,11 +1,14 @@
 package za.luna;
 
+import za.luna.DemoService;
+import za.luna.Grass;
+
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/resteasy-jackson/Grass")
+@Path("/resteasy-jackson/grass")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class JacksonResource {

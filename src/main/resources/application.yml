@@ -6,6 +6,8 @@
       password: password
       jdbc:
         url: jdbc:postgresql://34.89.221.132:5432/grass-db?stringtype=unspecified
+#  container-image:
+#    registry: docker.io
 quarkus:
   datasource:
     db-kind: postgresql
@@ -24,3 +26,25 @@ quarkus:
   flyway:
     migrate-at-start: true
     baseline-on-migrate: true
+
+  kubernetes:
+    namespace: test-dev
+    env:
+      vars:
+        quarkus-profile: dev
+    replicas: 2
+    service-type: LoadBalancer
+    image-pull-policy: IfNotPresent
+    config-map-volumes:
+      my-volume:
+        config-map-name: my-config-map
+    mounts:
+      my-volume:
+        path: /opt/mymount
+
+  container-image:
+#    registry: gcr.io
+    group: ltshangana
+    tag: 1.0.0-SNAPSHOT
+#    build: true
+#    push: true

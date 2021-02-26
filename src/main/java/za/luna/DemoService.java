@@ -1,9 +1,12 @@
 package za.luna;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Slf4j
 @ApplicationScoped
 public class DemoService {
     public List<Grass> getAll() {

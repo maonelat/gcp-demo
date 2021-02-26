@@ -1,0 +1,18 @@
+steps:
+  - name: maven:3-jdk-11
+    id: Maven Package
+    entrypoint: mvn
+    args:
+      - package
+      - -Dmaven.test.skip=true
+      - -Dquarkus.kubernetes.env.vars.quarkus.profile=prod
+      - -Dquarkus.container-image.registry=gcr.io
+      - -Dquarkus.container-image.build=true
+      - -Dquarkus.container-image.push=true
+  - name: gcr.io/cloud-builders/gke-deploy
+    id: Deploy to GKE
+    args:
+      - run
+      - filename=target/kubernetes/kubernetes.yml
+      - location=europe-west1
+      - cluster=autopilot-demo-cluster-1
