@@ -10,7 +10,6 @@ steps:
       - -Dquarkus.container-image.build=true
       - -Dquarkus.container-image.push=true
       - -Dquarkus.container-image.group=$PROJECT_ID
-      - group
   - name: gcr.io/cloud-builders/gke-deploy
     id: Deploy to GKE
     args:

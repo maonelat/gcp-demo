@@ -43,8 +43,8 @@ quarkus:
         path: /opt/mymount
 
   container-image:
-#    registry: gcr.io
-    group: ltshangana
+    registry: gcr.io
+    group: web-apps-278418
     tag: 1.0.0-SNAPSHOT
 #    build: true
 #    push: true
