@@ -8,7 +8,7 @@ steps:
       - -Dquarkus.kubernetes.env.vars.quarkus-profile=prod
       - -Dquarkus.container-image.registry=gcr.io
       - -Dquarkus.container-image.build=true
-      - -Dquarkus.container-image.push=true
+#      - -Dquarkus.container-image.push=true
       - -Dquarkus.container-image.group=$PROJECT_ID
   - name: gcr.io/cloud-builders/gke-deploy
     id: Deploy to GKE
