@@ -6,6 +6,14 @@
       password: password
       jdbc:
         url: jdbc:postgresql://34.89.221.132:5432/grass-db?stringtype=unspecified
+"%gke":
+  quarkus:
+    datasource:
+      db-kind: postgresql
+      username: postgres
+      password: password
+      jdbc:
+        url: jdbc:postgresql://127.0.0.1:5432/grass-db?stringtype=unspecified
 #  container-image:
 #    registry: docker.io
 quarkus:
@@ -42,12 +50,12 @@ quarkus:
       limits:
         memory: 512Mi
         cpu: 1000m
-#    config-map-volumes:
-#      my-volume:
-#        config-map-name: my-config-map
-#    mounts:
-#      my-volume:
-#        path: /opt/mymount
+    config-map-volumes:
+      my-volume:
+        config-map-name: my-config-map
+    mounts:
+      my-volume:
+        path: /opt/mymount
 
   container-image:
     registry: gcr.io

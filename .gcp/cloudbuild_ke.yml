@@ -5,7 +5,7 @@ steps:
     args:
       - package
       - -Dmaven.test.skip=true
-      - -Dquarkus.kubernetes.env.vars.quarkus-profile=prod
+      - -Dquarkus.kubernetes.env.vars.quarkus-profile=gke
       - -Dquarkus.container-image.registry=gcr.io
 #      - -Dquarkus.container-image.build=true
 #      - -Dquarkus.container-image.push=true
@@ -28,6 +28,6 @@ steps:
     id: Deploy to GKE
     args:
       - run
-      - --filename=target/kubernetes/kubernetes.yml
+      - --filename=.gcp/kubernetes.yml
       - --location=europe-west1
       - --cluster=autopilot-demo-cluster-1
