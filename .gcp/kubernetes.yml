@@ -97,7 +97,7 @@ spec:
         name: cloud-sql-proxy
         command:
           - "/cloud_sql_proxy"
-          - "-instances=web-apps-278418:europe-west3:myquark=0.0.0.0:5432"
+          - "-instances=web-apps-278418:europe-west3:myquark=tcp:5432"
           - "-credential_file=/secrets/service_account.json"
         securityContext:
           runAsNonRoot: true
