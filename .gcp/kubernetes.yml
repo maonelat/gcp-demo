@@ -57,7 +57,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: QUARKUS_PROFILE
-          value: dev
+          value: gke
         image: gcr.io/web-apps-278418/gcp-demo:1.0.0-SNAPSHOT
         imagePullPolicy: IfNotPresent
         livenessProbe:
