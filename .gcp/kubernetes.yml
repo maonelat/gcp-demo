@@ -4,8 +4,8 @@ kind: Service
 metadata:
   annotations:
     app.quarkus.io/vcs-url: https://github.com/maonelat/gcp-demo.git
-    app.quarkus.io/build-timestamp: 2021-03-01 - 20:20:03 +0000
-    app.quarkus.io/commit-id: 66f41c29da0d8485c62d2abeebc922668f57f719
+    app.quarkus.io/build-timestamp: 2021-03-01 - 21:03:25 +0000
+    app.quarkus.io/commit-id: 699826aa7deab91e17ea27050e6e10844a30d12e
   labels:
     app.kubernetes.io/name: gcp-demo
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
@@ -13,9 +13,9 @@ metadata:
   namespace: test-dev
 spec:
   ports:
-    - name: http
-      port: 8080
-      targetPort: 8080
+  - name: http
+    port: 8080
+    targetPort: 8080
   selector:
     app.kubernetes.io/name: gcp-demo
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
@@ -26,8 +26,8 @@ kind: Deployment
 metadata:
   annotations:
     app.quarkus.io/vcs-url: https://github.com/maonelat/gcp-demo.git
-    app.quarkus.io/build-timestamp: 2021-03-01 - 20:20:03 +0000
-    app.quarkus.io/commit-id: 66f41c29da0d8485c62d2abeebc922668f57f719
+    app.quarkus.io/build-timestamp: 2021-03-01 - 21:03:25 +0000
+    app.quarkus.io/commit-id: 699826aa7deab91e17ea27050e6e10844a30d12e
   labels:
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
     app.kubernetes.io/name: gcp-demo
@@ -43,70 +43,79 @@ spec:
     metadata:
       annotations:
         app.quarkus.io/vcs-url: https://github.com/maonelat/gcp-demo.git
-        app.quarkus.io/build-timestamp: 2021-03-01 - 20:20:03 +0000
-        app.quarkus.io/commit-id: 66f41c29da0d8485c62d2abeebc922668f57f719
+        app.quarkus.io/build-timestamp: 2021-03-01 - 21:03:25 +0000
+        app.quarkus.io/commit-id: 699826aa7deab91e17ea27050e6e10844a30d12e
       labels:
         app.kubernetes.io/version: 1.0.0-SNAPSHOT
         app.kubernetes.io/name: gcp-demo
       namespace: test-dev
     spec:
       containers:
-        - env:
-            - name: KUBERNETES_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: QUARKUS_PROFILE
-              value: dev
-          - image: gcr.io/web-apps-278418/gcp-demo:1.0.0-SNAPSHOT
-            imagePullPolicy: IfNotPresent
-            livenessProbe:
-              failureThreshold: 3
-              httpGet:
-                path: /q/health/live
-                port: 8080
-                scheme: HTTP
-              initialDelaySeconds: 0
-              periodSeconds: 30
-              successThreshold: 1
-              timeoutSeconds: 10
-            name: gcp-demo
-            ports:
-              - containerPort: 8080
-                name: http
-                protocol: TCP
-            readinessProbe:
-              failureThreshold: 3
-              httpGet:
-                path: /q/health/ready
-                port: 8080
-                scheme: HTTP
-              initialDelaySeconds: 0
-              periodSeconds: 30
-              successThreshold: 1
-              timeoutSeconds: 10
-            resources:
-              limits:
-                cpu: 1000m
-                memory: 512Mi
-              requests:
-                cpu: 250m
-                memory: 64Mi
-          - name: cloud-sql-proxy
-              # It is recommended to use the latest version of the Cloud SQL proxy
-              # Make sure to update on a regular schedule!
-              image: gcr.io/cloudsql-docker/gce-proxy:1.20
-              command:
-                - "/cloud_sql_proxy"
-                - "-instances=web-apps-278418:europe-west3:myquark=tcp:5432"
-                - "-credential_file=/secrets/service_account.json"
-              securityContext:
-                runAsNonRoot: true
-              volumeMounts:
-                - name: db-proxy-secret-volume
-                  mountPath: /secrets/
-                  readOnly: true
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: QUARKUS_PROFILE
+          value: dev
+        image: gcr.io/web-apps-278418/gcp-demo:1.0.0-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /q/health/live
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: gcp-demo
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /q/health/ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 10
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 64Mi
+      - image: gcr.io/cloudsql-docker/gce-proxy:latest
+        imagePullPolicy: IfNotPresent
+        name: cloud-sql-proxy
+        command:
+          - "/cloud_sql_proxy"
+          - "-instances=web-apps-278418:europe-west3:myquark=0.0.0.0:5432"
+          - "-credential_file=/secrets/service_account.json"
+        securityContext:
+          runAsNonRoot: true
+        volumeMounts:
+          - name: db-proxy-secret-volume
+            mountPath: /secrets/
+            readOnly: true
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /q/health/ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 10
       volumes:
         - name: db-proxy-secret-volume
-            secret:
-              secretName: db-proxy-secret
+          secret:
+            secretName: db-proxy-secret
